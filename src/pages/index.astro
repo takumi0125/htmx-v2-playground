@@ -1,0 +1,49 @@
+---
+import Component1 from '@/components/Component1.astro';
+import Component2 from '@/components/Component2.astro';
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout title="Home"  description="this is Home">
+  <section class="labelledFrame home" data-title="home" id="pageContents">
+    <h1>Home</h1>
+
+    <div class="description">
+      <p>
+        hx-swapで入れ替えたコンテンツにhtmxの構文を使った要素がある場合は、その要素に対してもhtmxの機能が適用される。
+      </p>
+      <p>
+        hx-swapで入れ替えられ、このボタンが削除された場合、このボタンに対するイベントハンドラも削除される。ただし、htmx.onで付与したイベントハンドラはhtmx.offしないと残り続ける。
+      </p>
+      <p>また、<a href="#" hx-on:click="window.test.removeButton0()">htmx.removeでDOMツリーから削除</a>してもhx-on-clickなどで付与したイベントハンドラは削除されない。Elementのremoveメソッドなどでもイベントハンドラは削除されない。そしてそれらでDOMツリーから削除してしまった場合、hx-swapでコンテンツが入れ替わっても、イベントハンドラが登録されたまま残り続ける。つまりメモリリークのリスクがある。</p>
+    </div>
+
+    <button
+      class="button0"
+      hx-trigger="click"
+      hx-swap="outerHTML"
+      hx-on:click="alert('clicked')"
+      hx-get="/page1"
+      hx-target="#slot"
+      hx-select="#pageContents"
+    >
+      Static Button
+    </button>
+
+    <Component1 class="component1" />
+    <Component2 class="component2" />
+  </section>
+</Layout>
+
+
+<style lang="scss" hx-swap-oob="#pageStyle" id="pageStyle">
+  .home[class] {
+    color: #ff0000;
+
+  }
+
+  .component1[class],
+  .component2[class] {
+    margin-top: 20px;
+  }
+</style>

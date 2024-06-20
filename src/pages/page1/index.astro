@@ -1,0 +1,38 @@
+---
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout title="Page1" description="this is Page1">
+  <section class="labelledFrame page1" data-title="page1" id="pageContents">
+    <h1>Page1</h1>
+
+    <div class="description">
+      <p>
+        属性値を動的に変更しても、その属性値は反映されない。この例では、hx-on:click, hx-get, hx-targetなどの値を動的に変更しているが、反映されない。と思ったけど、htmx.processを使えばできる。
+      </p>
+    </div>
+
+    <button
+      class="button1"
+      hx-trigger="click"
+      hx-swap="none"
+      hx-on:click="alert('これは変更されていない値です。')"
+    >
+      Static Button
+    </button>
+
+    <div class="description">
+      <p>
+        さらに、動的にhtmxの属性値を付与したボタンを生成し、コンテンツに挿入しても、機能しない。と思ったけど、htmx.processを使えばできる。
+      </p>
+    </div>
+
+  </section>
+</Layout>
+
+<style lang="scss" hx-swap-oob="#pageStyle" id="pageStyle">
+  .page1[class] {
+    color: #ff00ff;
+
+  }
+</style>

@@ -1,0 +1,206 @@
+---
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+
+const NavItemsData = [
+  { name: "Home", href: "/" },
+  { name: "Page1", href: "/page1" },
+  { name: "Page2", href: "/page2" },
+  { name: "Page3", href: "/page3" },
+]
+
+import "@/global.scss";
+
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+  </head>
+  <script src="../js/index.ts"></script>
+  <body>
+    <div class="layout">
+      <div class="inner labelledFrame" data-title="layout">
+        <header class="header">
+          <nav>
+            <ul>
+              {NavItemsData.map(({ name, href }) => (
+                <li>
+                  <a
+                    hx-trigger="click"
+                    hx-get={href}
+                    hx-swap="innerHTML swap:0.2s"
+                    hx-target="#slot"
+                    hx-select="#pageContents"
+                    hx-push-url="true"
+                    href={href}>{name}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </header>
+        <p class="title" id="pageTitle" hx-swap-oob="true">Page Title: {title}</p>
+        <div class="labelledFrame fadeInOut" data-title="#slot" id="slot">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<style lang="scss" is:global>
+  html, body {
+    background-color: #fff;
+    color: #000;
+    font-family: sans-serif !important;
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+  }
+
+  .fadeInOut {
+    transition: opacity 0.2s linear, transform 0.4s cubic-bezier(0.190, 1.000, 0.220, 1.000);
+    opacity: 1;
+    transform: none;
+
+    &.htmx-swapping {
+      opacity: 0;
+      transition: opacity 0.1s linear, transform 0.01s linear 0.1s;
+      transform: translateY(20px);
+    }
+
+    &.htmx-swapping.htmx-added {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: none !important;
+    }
+
+
+  }
+
+  .labelledFrame {
+    position: relative;
+    border: 2px solid currentColor;
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+    padding: 40px 20px 20px;
+    overflow: hidden;
+
+    &::before, &::after {
+      position: absolute;
+      font-size: 12px;
+      top: 0;
+      left: 0;
+      padding: 6px;
+      border-bottom-right-radius: 6px;
+      z-index: 0;
+      content: attr(data-title);
+    }
+
+    &::before {
+      background-color: currentColor;
+      color: currentColor;
+      z-index: 0;
+    }
+
+    &::after {
+      color: #fff;
+      z-index: 1;
+    }
+
+    .description {
+      font-size: 14px;
+      line-height: 2;
+
+      &:not(:first-child) {
+        margin-top: 20px;
+      }
+
+      p:not(:first-child) {
+        margin-top: 10px;
+      }
+    }
+
+    a {
+      text-decoration: underline;
+      color: inherit;
+    }
+
+    button {
+      font-size: 12px;
+      border: 2px solid currentColor;
+      border-radius: 6px;
+      background-color: transparent;
+      cursor: pointer;
+      padding: 10px;
+      margin-top: 20px;
+      color: currentColor;
+
+    }
+  }
+</style>
+<style lang="scss">
+  .layout {
+    position: relative;
+    padding: 20px;
+    height: 100svh;
+  }
+
+  .inner[class] {
+    padding-top: 60px;
+  }
+
+  .header {
+    height: 60px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    nav {
+      display: block;
+      height: 100%;
+    }
+
+    ul {
+      height: 100%;
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+      column-gap: 20px;
+    }
+
+    li {
+      display: block;
+      position: relative;
+    }
+
+    a {
+      position: relative;
+      padding: 10px;
+      display: block;
+    }
+  }
+  .title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    z-index: 2;
+    border-bottom-right-radius: 6px;
+  }
+
+</style>

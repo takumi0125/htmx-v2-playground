@@ -1,0 +1,31 @@
+---
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout title="Page2" description="this is Page2">
+  <section class="labelledFrame page2" data-title="page2" id="pageContents">
+    <h1>Page2</h1>
+
+
+    <div id="childContents" class="childContents labelledFrame fadeInOut" hx-swap="outerHTML swap:0.2s" data-title="page2_1 child contents">
+      <div class="description">
+        <p>
+          page2配下ではこのコンテンツが入れ替わります。<a href="#" hx-trigger="click" hx-target="#childContents" hx-select="#childContents" hx-get="/page2" hx-push-url="true">page2</a>へ。
+        </p>
+        <p>ただし、グロナビからpage2へ戻ると、#slot が入れ替わる。ページのパスが変わったら動的にグロナビの hx-target, hx-selectを切り替えないと実現できない?</p>
+      </div>
+    </div>
+
+  </section>
+</Layout>
+
+<style lang="scss"  hx-swap-oob="#pageStyle" id="pageStyle">
+  .page2 {
+    color: #0000ff;
+  }
+
+  .childContents {
+    color: #aa3300;
+    margin-top: 20px;
+  }
+</style>

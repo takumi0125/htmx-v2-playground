@@ -1,0 +1,12 @@
+---
+const { class: className, ...attributes } = Astro.props
+---
+<div class:list={['labelledFrame', 'component1', className]} data-title="Components1" {...attributes}>Component1</div>
+
+<style lang="scss">
+  .component1 {
+    width: 100%;
+    height: 200px;
+    color: #ff92cc;
+  }
+</style>

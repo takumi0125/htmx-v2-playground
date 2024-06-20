@@ -1,0 +1,30 @@
+---
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout title="Page2" description="this is Page2">
+  <section class="labelledFrame page2" data-title="page2" id="pageContents">
+    <h1>Page2</h1>
+
+
+    <div id="childContents" class="childContents labelledFrame fadeInOut" hx-swap="outerHTML swap:0.2s" data-title="page2 child contents">
+      <div class="description">
+        <p>
+          page2配下ではこのコンテンツが入れ替わります。<a href="#" hx-trigger="click" hx-target="#childContents" hx-select="#childContents" hx-get="/page2/page2_1" hx-push-url="true">page2_1</a>へ。
+        </p>
+      </div>
+    </div>
+
+  </section>
+</Layout>
+
+<style lang="scss"  hx-swap-oob="#pageStyle" id="pageStyle">
+  .page2 {
+    color: #0000ff;
+  }
+
+  .childContents {
+    color: #5588cc;
+    margin-top: 20px;
+  }
+</style>

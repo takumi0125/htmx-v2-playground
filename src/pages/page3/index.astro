@@ -1,0 +1,33 @@
+---
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout title="Page3"  description="this is Page3">
+  <section class="labelledFrame page3" data-title="page3" id="pageContents">
+    <h1>Page3</h1>
+
+    <div class="description">
+      <p>
+        Alpine.jsもバッチリOK。AHA Stackというやつ。
+      </p>
+    </div>
+
+    <div x-data="{ count: 0 }">
+      <button class="button3" @click="count++">Increment</button>
+      <span x-text="count"></span>
+    </div>
+
+    <div class="description">
+      <p>
+        Alpine.jsは動的に生成しても問題なし。<a href="#" x-data @click="window.test.removeButton3()">DOMツリーから削除</a>しても、イベントハンドラがしっかり削除される。
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<style lang="scss"  hx-swap-oob="#pageStyle" id="pageStyle">
+  .page3 {
+    color: #00cc00;
+
+  }
+</style>
